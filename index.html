@@ -16,24 +16,52 @@
 </head>
 <body>
 
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-sm-10 mx-auto">
-                <form method="post" action=" ">
-                    <div class="form-group">
-                        <label for="textArea">Введите текст объявления:</label>
-                        <div id="toolbar-container"></div>
-                        <div id="editor">
-                            <textarea class="form-control editor" id="textArea"></textarea>
-                        </div>
-
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-sm-10 mx-auto">
+            <form method="post" action=" ">
+                <div class="form-group">
+                    <label for="textArea">Введите текст объявления:</label>
+                    <div id="toolbar-container"></div>
+                    <div id="editor">
+                        <textarea class="form-control" id="textArea"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
-                </form>
-            </div>
-        </div>
-    </div>
 
+                </div>
+                <button id="btn" onClick="return false;" type="submit" class="btn btn-primary">Сохранить</button>
+            </form>
+            <div style="display: none" class="copytext red"></div>
+            <div class="copytext1"></div>
+        </div>
+
+    </div>
+</div>
+
+    <script>
+        $(document).ready ( function(){
+            /* $copytext = $('.copytext');*/
+            $('#btn').on('click', function() {
+                var a = ($('.copytext').text($("#editor").html()));
+                console.log(a.text());
+                $('.copytext1').append(a.text());
+
+
+                /*            $('#btn').on('click', function() {
+                                console.log($("#editor").html($("#editor").text()));*/
+
+
+                /* .html($('.copytext').text())*/
+
+                /*                $('.copytext').addClass('red')
+                                getText = $("#textArea").val();
+                                console.log($("#editor").children('p').html());
+                                $(".copytext").html(getText);*/
+
+            });
+        });
+
+
+    </script>
 
     <script>
 /*        console.log(DecoupledDocumentEditor.builtinPlugins.map( plugin => plugin.pluginName ))*/
@@ -45,9 +73,9 @@
                             'Bold', 'Italic', 'Underline','Strikethrough', 'RemoveFormat', 'Highlight', '|',
                             'Alignment', '|', 'numberedList', 'bulletedList', 'todolist', '|',
                             'Indent', 'Outdent', '|', 'Subscript', 'Superscript',
-                            'HorizontalLine', 'Link', 'BlockQuote', '|',
-                            'SpecialCharacters', 'MathType', 'ChemType', '|',
-                            'InsertTable', 'ExportPDF', 'ExportWord', '|',  'undo', 'redo'],
+                            'HorizontalLine', 'Link', 'BlockQuote',
+                            'SpecialCharacters', '|',
+                            'InsertTable', '|',  'undo', 'redo'],
                      shouldNotGroupWhenFull: true
                     }
             })
