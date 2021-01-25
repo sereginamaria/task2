@@ -18,7 +18,7 @@ import FontSize from '@ckeditor/ckeditor5-font/src/fontsize.js';
 import Heading from '@ckeditor/ckeditor5-heading/src/heading.js';
 import Highlight from '@ckeditor/ckeditor5-highlight/src/highlight.js';
 import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline.js';
-import HtmlEmbed from '@ckeditor/ckeditor5-html-embed/src/htmlembed';
+import HtmlEmbed from '@ckeditor/ckeditor5-html-embed/src/htmlembed.js';
 import Indent from '@ckeditor/ckeditor5-indent/src/indent.js';
 import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock.js';
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js';
