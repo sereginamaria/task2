@@ -28,10 +28,10 @@
                     </div>
 
                 </div>
-                <button id="btn" onClick="return false;" type="submit" class="btn btn-primary">Сохранить</button>
+                <button id="submit" onClick="return false;" type="submit" class="btn btn-primary">Сохранить</button>
             </form>
-            <div style="display: none" class="copytext red"></div>
-            <div class="copytext1"></div>
+            <div style="display: none" class="copyhtml"></div>
+            <div class="copytext mt-4"></div>
         </div>
 
     </div>
@@ -39,28 +39,10 @@
 
     <script>
         $(document).ready ( function(){
-            /* $copytext = $('.copytext');*/
-            $('#btn').on('click', function() {
-                var a = ($('.copytext').text($("#editor").html()));
-                console.log(a.text());
-                $('.copytext1').append(a.text());
-
-
-                /*            $('#btn').on('click', function() {
-                                console.log($("#editor").html($("#editor").text()));*/
-
-
-                /* .html($('.copytext').text())*/
-
-                /*                $('.copytext').addClass('red')
-                                getText = $("#textArea").val();
-                                console.log($("#editor").children('p').html());
-                                $(".copytext").html(getText);*/
-
+            $('#submit').on('click', function() {
+                $('.copytext').append(($('.copyhtml').text($("#editor").html())).text());
             });
         });
-
-
     </script>
 
     <script>
