@@ -45,5 +45,8 @@
   "scripts": {
     "build": "webpack --mode production",
     "start": "npx http-server -o ./sample -s -c-1"
+  },
+  "dependencies": {
+    "@ckeditor/ckeditor5-html-embed": "^24.0.0"
   }
 }
