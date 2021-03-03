@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="sass/index.css">
+    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <script src="ckeditor5/build/ckeditor.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+</head>
+<body>
+<div class="container-fluid my-4">
+    <div class="text-center">
+        Header Area
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-sm-10 mx-auto">
+            <form method="post" action=" ">
+                <div class="form-group">
+                    <label for="textArea">Введите текст объявления:</label>
+                    <div id="toolbar-container"></div>
+                    <div id="editor">
+                        <textarea class="form-control" id="textArea"></textarea>
+                    </div>
+
+                </div>
+                <button id="submit" onClick="return false;" name="insertRow"
+                        class="btn btn-primary float-end mt-4">Отправить</button>
+            </form>
+            <div style="display: none" class="copyhtml"></div>
+            <div id="copytext" class="mt-4"></div>
+        </div>
+
+    </div>
+</div>
+
+<div class="container-fluid mt-5">
+    <table id="example" class="table ">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th class="editor">News</th>
+            <th>Send</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="app" class="form-group">
+                    <div id="getToolbarContainer"></div>
+                    <div id="getEditor">
+                        <textarea class="form-control" id="getTextArea"></textarea>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="savechanges" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /*    $('#buttonn').on('click', function() {
+            $("#myModal").modal('show');
+        })*/
+
+    /*    $("#exampleModal").on("hidden.bs.modal", function () {
+            console.log('The modal is about to be hidden!');
+        });*/
+</script>
+
+<script>
+    /* import * as bootstrap from "./bootstrap-4.5.3-dist/js/bootstrap";
+ */
+
+
+    var table = $('#example').DataTable({
+        ajax: {
+            url: 'list.json',
+            dataSrc: 'news'
+        },
+        columnDefs: [ {
+            "targets": -1,
+            "data": null,
+            "defaultContent": "<button data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\">Click!</button>",
+            className: 'dt-body-center',
+        } ],
+        columns: [
+            { data: 'id' },
+            { data: 'text' },
+            { data: 'send' },
+        ]
+
+    });
+
+
+    var k
+
+    $('#example tbody').on( 'click', 'button', function () {
+        var data = table.row($(this).parents('td')).data();
+        /*        console.log(data.id, data.text);*/
+        var text = data.text;
+
+        $('#getEditor').append(text)
+        console.log(text)
+
+        $('#savechanges').on( 'click', function () {
+            console.log(data.text)
+            /*            console.log(($('.savech').text($("#getEditor").html())).text())*/
+            console.log($("#getEditor").html())
+
+
+            /*
+                        $('#savech').append(($('.copyhtml').text($("#editor").html())).text());
+                        console.log($('.copyhtml').text($("#editor").html()).text())
+
+                        var dataNews = JSON.stringify({
+                            "textarea": $('.copyhtml').text($("#editor").html()).text()
+
+                        })*/
+
+        })
+
+        /*        $("#exampleModal").on("shown.bs.modal", function () {
+
+                    $('#appendText').append(text)
+
+                    $('#getEditor').append(text)
+                    console.log(text)
+                })*/
+
+        /*            $('#copytext').append(($('.copyhtml').text($("#editor").html())).text());
+                    console.log($('.copyhtml').text($("#editor").html()).text())
+
+                    var dataNews = JSON.stringify({
+                        "textarea": $('.copyhtml').text($("#editor").html()).text()
+
+                    })*/
+
+        /*
+                $('#getTextArea').addClass('textArea'+data.id)
+                /!*        $('.editor'+data.id).removeClass('editor'+data.id).addClass('editor'+data.id)*!/
+
+
+
+                $('.textArea'+data.id).append(text);
+                console.log(text);
+        */
+
+
+
+
+        k = data.id
+
+        $('#getEditor').addClass('editor'+data.id)
+        /*        $('.editor'+data.id).removeClass('editor'+data.id).addClass('editor'+data.id)*/
+
+        $('#getToolbarContainer').addClass('toolbarContainer'+data.id)
+        /*        $('.editor'+data.id).removeClass('editor'+data.id).addClass('editor'+data.id)*/
+
+        DecoupledDocumentEditor
+            .create( document.querySelector( '.editor' + data.id ), {
+                removePlugins: ['Title'],
+                toolbar: {
+                    items: [ 'Heading', '|', 'FontFamily','FontSize', 'FontColor', 'FontBackgroundColor', '|',
+                        'Bold', 'Italic', 'Underline','Strikethrough', 'RemoveFormat', 'Highlight', '|',
+                        'Alignment', '|', 'numberedList', 'bulletedList', 'todolist', '|',
+                        'Indent', 'Outdent', '|', 'Subscript', 'Superscript',
+                        'HorizontalLine', 'Link', 'BlockQuote',
+                        'SpecialCharacters', '|',
+                        'InsertTable', 'HtmlEmbed', '|',  'undo', 'redo'],
+                    shouldNotGroupWhenFull: true
+                }
+            })
+            .then( editor => {
+                const toolbarContainer = document.querySelector( '.toolbarContainer'+data.id);
+
+                toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+
+            } )
+
+        /*        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
+                    keyboard: false
+                })
+                myModal.dispose()*/
+
+    } );
+
+    $("#exampleModal").on("hidden.bs.modal", function () {
+        console.log('The modal is about to be hidden!');
+        $('#getEditor').removeClass('editor'+k)
+
+        var myNode = document.getElementById("getToolbarContainer");
+        while (myNode.firstChild) {
+            myNode.removeChild(myNode.firstChild);
+        }
+        /*
+                var str = "<textarea class=\"form-control\" id=\"getTextArea\"></textarea>"
+                myNode.html(str)
+        */
+
+
+        $('#getEditor').remove()
+        $('#app').append('                    <div id="getEditor">\n' +
+            '                        <textarea class="form-control" id="getTextArea"></textarea>\n' +
+            '                    </div>')
+
+
+    });
+
+</script>
+
+
+<script>
+    $(document).ready ( function(){
+        $('#submit').on('click', function() {
+            $('#copytext').append(($('.copyhtml').text($("#editor").html())).text());
+            console.log($('.copyhtml').text($("#editor").html()).text())
+
+            var dataNews = JSON.stringify({
+                "textarea": $('.copyhtml').text($("#editor").html()).text()
+
+            })
+
+            console.log(dataNews)
+        });
+    });
+</script>
+
+<script>
+    /*        console.log(DecoupledDocumentEditor.builtinPlugins.map( plugin => plugin.pluginName ))*/
+    DecoupledDocumentEditor
+        .create( document.querySelector( '#editor' ), {
+            removePlugins: ['Title'],
+            toolbar: {
+                items: [ 'Heading', '|', 'FontFamily','FontSize', 'FontColor', 'FontBackgroundColor', '|',
+                    'Bold', 'Italic', 'Underline','Strikethrough', 'RemoveFormat', 'Highlight', '|',
+                    'Alignment', '|', 'numberedList', 'bulletedList', 'todolist', '|',
+                    'Indent', 'Outdent', '|', 'Subscript', 'Superscript',
+                    'HorizontalLine', 'Link', 'BlockQuote',
+                    'SpecialCharacters', '|',
+                    'InsertTable', 'HtmlEmbed', '|',  'undo', 'redo'],
+                shouldNotGroupWhenFull: true
+            }
+        })
+        .then( editor => {
+            const toolbarContainer = document.querySelector( '#toolbar-container' );
+
+            toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+
+        } )
+
+</script>
+
+</body>
+</html>

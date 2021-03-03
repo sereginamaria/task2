@@ -1,0 +1,28 @@
+{
+  "news": [
+    {
+      "id": "1",
+      "text": "<p>FDfbfbdbf</p><ol><li>dfb</li><li>hf</li></ol><p><mark class=\"marker-yellow\">gndg</mark></p>",
+      "Send": "пп",
+      "Send1": "рр"
+    },
+    {
+      "id": "2",
+      "text": "ривте",
+      "Send": "gg",
+      "Send1": "рр"
+    },
+    {
+      "id": "3",
+      "text": "ячсмить",
+      "Send": "gg",
+      "Send1": "рр"
+    },
+    {
+      "id": "4",
+      "text": "уруруроур",
+      "Send": "gg",
+      "Send1": "рр"
+    }
+  ]
+}

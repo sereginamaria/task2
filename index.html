@@ -3,18 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+
     <link rel="stylesheet" href="sass/index.css">
+
     <link rel="stylesheet" href="bootstrap-4.5.3-dist/css/bootstrap.css">
     <link rel="stylesheet" href="bootstrap-4.5.3-dist/css/bootstrap-grid.css">
     <link rel="stylesheet" href="bootstrap-4.5.3-dist/css/bootstrap-reboot.css">
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
     <script src="bootstrap-4.5.3-dist/js/bootstrap.js"></script>
     <script src="bootstrap-4.5.3-dist/js/bootstrap.bundle.js"></script>
 
     <script src="ckeditor5/build/ckeditor.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/sl-1.3.1/datatables.min.css"/>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/sl-1.3.1/datatables.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+
+
 </head>
 <body>
+<!--
+
+<div class="container-fluid my-4">
+    <div class="text-center">
+        Header Area
+    </div>
+</div>
 
 <div class="container mt-4">
     <div class="row">
@@ -28,19 +53,145 @@
                     </div>
 
                 </div>
-                <button id="submit" onClick="return false;" type="submit" class="btn btn-primary">Сохранить</button>
+                <button id="submit" onClick="return false;" type="POST" name="insertRow"
+                        value="JSON" class="btn btn-primary float-right">Отправить</button>
             </form>
             <div style="display: none" class="copyhtml"></div>
-            <div class="copytext mt-4"></div>
+            <div id="copytext" class="mt-4"></div>
         </div>
 
     </div>
 </div>
 
+<div class="container-fluid mt-5">
+    <table id="example" class="table ">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th class="editor">News</th>
+            <th>Send</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    Launch demo modal
+</button>
+
+&lt;!&ndash; Модальное окно &ndash;&gt;
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="textArea">Введите текст объявления:</label>
+                    <div id="toolbar-container1"></div>
+                    <div id="getEditor">
+                        <textarea class="form-control" id="textArea1"></textarea>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="saveChanges" type="POST" name="updateRow" value="JSON" class="btn btn-primary" >Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#myModal").on("hidden.bs.modal", function () {
+        console.log('The modal is about to be hidden!');
+    });
+</script>
+
+
+<script>
+   /* import * as bootstrap from "./bootstrap-4.5.3-dist/js/bootstrap";
+*/
+    var table = $('#example').DataTable({
+        ajax: {
+            url: 'list.json',
+            dataSrc: 'news'
+        },
+        columnDefs: [ {
+            "targets": -1,
+            "data": null,
+            "defaultContent": "<button data-toggle=\"modal\" data-target=\"#myModal\">Click!</button>",
+            className: 'dt-body-center',
+        } ],
+        columns: [
+            { data: 'id' },
+            { data: 'text' },
+            { data: 'send' },
+        ]
+
+    });
+    var k
+
+    $('#example tbody').on( 'click', 'button', function () {
+        var data = table.row($(this).parents('td')).data();
+/*        console.log(data.id, data.text);*/
+        var text = data.text;
+
+        $('#textArea1').append(text)
+        console.log(text);
+
+        k = data.id
+
+        $('#getEditor').addClass('editor'+data.id)
+/*        $('.editor'+data.id).removeClass('editor'+data.id).addClass('editor'+data.id)*/
+
+        DecoupledDocumentEditor
+            .create( document.querySelector( '.editor' + data.id ), {
+                removePlugins: ['Title'],
+                toolbar: {
+                    items: [ 'Heading', '|', 'FontFamily','FontSize', 'FontColor', 'FontBackgroundColor', '|',
+                        'Bold', 'Italic', 'Underline','Strikethrough', 'RemoveFormat', 'Highlight', '|',
+                        'Alignment', '|', 'numberedList', 'bulletedList', 'todolist', '|',
+                        'Indent', 'Outdent', '|', 'Subscript', 'Superscript',
+                        'HorizontalLine', 'Link', 'BlockQuote',
+                        'SpecialCharacters', '|',
+                        'InsertTable', 'HtmlEmbed', '|',  'undo', 'redo'],
+                    shouldNotGroupWhenFull: true
+                }
+            })
+            .then( editor => {
+                const toolbarContainer = document.querySelector( '#toolbar-container1' );
+
+                toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+
+            } )
+
+/*        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
+            keyboard: false
+        })
+        myModal.dispose()*/
+
+    } );
+</script>
+
+
     <script>
         $(document).ready ( function(){
             $('#submit').on('click', function() {
-                $('.copytext').append(($('.copyhtml').text($("#editor").html())).text());
+                $('#copytext').append(($('.copyhtml').text($("#editor").html())).text());
+                console.log($('.copyhtml').text($("#editor").html()).text())
+
+                var dataNews = JSON.stringify({
+                    "textarea": $('.copyhtml').text($("#editor").html()).text()
+
+                })
+
+                console.log(dataNews)
             });
         });
     </script>
@@ -69,6 +220,52 @@
             } )
 
     </script>
+-->
 
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div id="getToolbarContainer"></div>
+                    <div id="getEditor">
+                        <textarea class="form-control" id="getTextArea"></textarea>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="get"></div>
+<script>
+    $("#exampleModal").on("hidden.bs.modal", function () {
+        console.log('The modal is about to be hidden!');
+        $('#getEditor').removeClass('editor'+k)
+    var myNode = document.getElementById("get");
+    /*        while (myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+            }*/
+    var str = "<textarea class=\"form-control\" id=\"getTextArea\"></textarea>"
+    myNode.html(str)
+    });
+
+</script>
 </body>
 </html>
