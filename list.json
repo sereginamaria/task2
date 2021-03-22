@@ -2,27 +2,39 @@
   "news": [
     {
       "id": "1",
-      "text": "<p>FDfbfbdbf</p><ol><li>dfb</li><li>hf</li></ol><p><mark class=\"marker-yellow\">gndg</mark></p>",
+      "textarea": "<p>FDfbfbdbf</p><ol><li>dfb</li><li>hf</li></ol><p><mark class=\"marker-yellow\">gndg</mark></p>",
       "Send": "пп",
-      "Send1": "рр"
+      "visible": "1",
+      "visible_from": " gg",
+      "visible_to": " gg",
+      "logins": " gg"
     },
     {
       "id": "2",
-      "text": "ривте",
+      "textarea": "ривте",
       "Send": "gg",
-      "Send1": "рр"
+      "visible": "0",
+      "visible_from": "gg ",
+      "visible_to": "gg ",
+      "logins": " gg"
     },
     {
       "id": "3",
-      "text": "ячсмить",
+      "textarea": "ячсмить",
       "Send": "gg",
-      "Send1": "рр"
+      "visible": "0",
+      "visible_from": " gg",
+      "visible_to": "gg ",
+      "logins": "gg "
     },
     {
       "id": "4",
-      "text": "уруруроур",
+      "textarea": "уруруроур",
       "Send": "gg",
-      "Send1": "рр"
+      "visible": "1",
+      "visible_from": " gg",
+      "visible_to": "gg ",
+      "logins": "gg "
     }
   ]
 }
